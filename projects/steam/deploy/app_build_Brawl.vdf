@@ -1,0 +1,17 @@
+"appbuild"
+{
+	"appid"	"1007820"
+	"desc" "Brawl" // description for this build
+	"buildoutput" "..\output\" // build output folder for .log, .csm & .csd files, relative to location of this file
+	"contentroot" "..\content\Brawl\" // root content folder, relative to location of this file
+	"setlive"	"" // branch to set live after successful build, non if empty
+	"preview" "0" // to enable preview builds
+	"local"	""	// set to flie path of local content server 
+	
+	"depots"
+	{
+		"1007821" "depot_build_Brawl_MacOS.vdf"
+		"1007822" "depot_build_Brawl_Win32.vdf"
+		"1007823" "depot_build_Brawl_Linux.vdf"
+	}
+}
