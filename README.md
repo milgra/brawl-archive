@@ -22,6 +22,8 @@ Comment on Brawl/Message the author :
 
 <a href="http://milgra.com/brawl.html">Brawl homepage</a>
 
+If you find this repo useful, please donate : <a href="https://paypal.me/milgra">paypal.me/milgra</a>
+
 ---
 
 ## Project structure
