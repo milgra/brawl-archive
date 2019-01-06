@@ -1519,11 +1519,11 @@
                 {
 					mtbus_notify( "CTL" , "DONATE" , defaults.prices[0] );
 				}
-                else if ( strcmp( command->name , "donate_a" ) == 0 )
+                else if ( strcmp( command->name , "donate_b" ) == 0 )
                 {
 					mtbus_notify( "CTL" , "DONATE" , defaults.prices[1] );
 				}
-                else if ( strcmp( command->name , "donate_a" ) == 0 )
+                else if ( strcmp( command->name , "donate_c" ) == 0 )
                 {
 					mtbus_notify( "CTL" , "DONATE" , defaults.prices[2] );
 				}
