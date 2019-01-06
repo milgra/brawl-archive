@@ -232,7 +232,7 @@ void bridge_init( void )
     
     if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone )
     {
-        defaults.text_scale = 1.2;
+        //defaults.text_scale = 1.2;
     }
 }
 
