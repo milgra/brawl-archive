@@ -1369,6 +1369,13 @@
 
     void scene_pickup( actor_t* actor )
     {
+		
+		if ( defaults.sceneindex > 3 && defaults.donation_arrived == 0 )
+		{
+			mtbus_notify( "VIEW" , "SHOWTIP" , "PlsGive" );
+			return;
+		}
+		
         /* get actor's group */
 
         actor_group_t* group = NULL;

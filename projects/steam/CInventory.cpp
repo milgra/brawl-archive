@@ -5,9 +5,9 @@
 extern "C"
 {
     #include "../../sources/defaults.c"
-    #include "framework/core/mtbus.c"
-    #include "framework/core/mtcstr.c"
-    #include "framework/tools/settings.c"
+    #include "../../framework/core/mtbus.c"
+    #include "../../framework/core/mtcstr.c"
+    #include "../../framework/tools/settings.c"
 }
 
 
@@ -18,6 +18,13 @@ CInventory::CInventory():
 
 }
 
+
+void CInventory::GetItems( void )
+{
+
+    SteamInventory()->GetAllItems( NULL );
+
+}
 
 void CInventory::GetPrices( void (*OnPrices)(void) )
 {
@@ -154,35 +161,42 @@ void CInventory::OnItemsReceived( SteamInventoryResultReady_t* callback )
     if ( callback->m_result == k_EResultOK )
     {
 
-        SteamItemDetails_t items[100];
         uint32 count = 0;
-        bool bGotResult = false;
 
         if ( SteamInventory()->GetResultItems( callback->m_handle, NULL, &count ) )
         {
+			
+        	SteamItemDetails_t items[ count ];
+
+        	bool bGotResult = false;
+
             bGotResult = SteamInventory()->GetResultItems(
                 callback->m_handle,
                 items,
                 &count );
-        }
+			
+			if ( bGotResult )
+			{
 
-        if ( bGotResult )
-        {
-            // For everything already in the inventory, check for update or removal
+				for ( int index = 0 ;
+						  index < count ;
+						  index++ )
+				{
 
-            for ( int index = 0 ;
-                      index < 3 ;
-                      index++ )
-            {
+					SteamItemDetails_t detail = items[ index ];
 
-                SteamItemDetails_t detail = items[ index ];
+					printf( "id %llu def %i quantity %i\n" ,
+							detail.m_itemId ,
+							detail.m_iDefinition ,
+							detail.m_unQuantity  );
 
-                printf( "id %llu def %i quantity %i\n" ,
-                        detail.m_itemId ,
-                        detail.m_iDefinition ,
-                        detail.m_unQuantity  );
+					defaults.donation_arrived = 1;
+					
+					// SteamInventory()->ConsumeItem( NULL , detail.m_itemId , detail.m_unQuantity );
 
-            }
+				}
+
+			}
 
         }
 
@@ -224,6 +238,7 @@ void steam_init( )
     if ( success )
     {
         inv = new CInventory( );
+        inv->GetItems( );
         inv->GetPrices( &steam_storeprices );
     }
 }

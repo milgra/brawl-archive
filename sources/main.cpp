@@ -518,21 +518,21 @@
             SDL_DisplayMode displaymode;
 
             SDL_GetCurrentDisplayMode( 0 , &displaymode );
-//
-//            if ( displaymode.w < 800 || displaymode.h < 400 )
-//            {
-//
-//                width = displaymode.w;
-//                height = displaymode.h;
-//
-//            }
-//            else
-//            {
-//
-//                width = displaymode.w * 0.8;
-//                height = displaymode.h * 0.8;
-//
-//            }
+
+            if ( displaymode.w < 800 || displaymode.h < 400 )
+            {
+
+                width = displaymode.w;
+                height = displaymode.h;
+
+            }
+            else
+            {
+
+                width = displaymode.w * 0.8;
+                height = displaymode.h * 0.8;
+
+            }
 
             #if defined(IOS) && defined(ANDROID)
             width = displaymode.w;

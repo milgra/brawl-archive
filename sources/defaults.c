@@ -2,7 +2,7 @@
     #ifndef defaults_h
     #define defaults_h
 
-    #define BRAWL_VERSION "V1.00"
+    #define BRAWL_VERSION "V1.1"
 
     #include <stdlib.h>
     #include "framework/tools/font.c"
@@ -36,6 +36,7 @@
 		char* libpath;
 		char* respath;
 		
+		char donation_arrived;
         char prices_arrived;
         char prices[ 3 ][ 100 ];
 	

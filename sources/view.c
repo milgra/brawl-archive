@@ -1273,6 +1273,10 @@
         {
 			text = "Press DOWN to pick up a gun. Press C to fire it.";
         }
+        else if ( strcmp( text , "PlsGive" ) == 0 )
+        {
+			text = "To pick up stuff after the third level please donate from the main menu.";
+        }
 
 		mtstr_t* str = mtstr_frombytes( text );
 		
