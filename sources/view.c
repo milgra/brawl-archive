@@ -1530,14 +1530,23 @@
                 else if ( strcmp( command->name , "donate_a" ) == 0 )
                 {
 					mtbus_notify( "CTL" , "DONATE" , defaults.prices[0] );
+                	view_hideelement( (char*) "optselement" );
+                	view_hideelement( (char*) "dntselement" );
+                	view_showelement( (char*) "menuelement" );
 				}
                 else if ( strcmp( command->name , "donate_b" ) == 0 )
                 {
 					mtbus_notify( "CTL" , "DONATE" , defaults.prices[1] );
+                	view_hideelement( (char*) "optselement" );
+                	view_hideelement( (char*) "dntselement" );
+                	view_showelement( (char*) "menuelement" );
 				}
                 else if ( strcmp( command->name , "donate_c" ) == 0 )
                 {
 					mtbus_notify( "CTL" , "DONATE" , defaults.prices[2] );
+                	view_hideelement( (char*) "optselement" );
+                	view_hideelement( (char*) "dntselement" );
+                	view_showelement( (char*) "menuelement" );
 				}
                 else if ( strcmp( command->name , "exit" ) == 0 )
                 {
