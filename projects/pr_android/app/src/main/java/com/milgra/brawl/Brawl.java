@@ -1,4 +1,4 @@
-package com.milgra.cortex;
+package com.milgra.brawl;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Cortex extends SDLActivity implements PurchasesUpdatedListener {
+public class Brawl extends SDLActivity implements PurchasesUpdatedListener {
 
     static{
         System.loadLibrary("main");
@@ -30,7 +30,7 @@ public class Cortex extends SDLActivity implements PurchasesUpdatedListener {
     private BillingClient mBillingClient;
 
     private String itemIds[];
-    private static Cortex statictermite;
+    private static Brawl staticbrawl;
 
     private native void storeitem(int index , String name);
     private native void showdonate( );
@@ -43,9 +43,9 @@ public class Cortex extends SDLActivity implements PurchasesUpdatedListener {
         super.onCreate(savedInstanceState);
 
         // init billing client
-        Log.i( "CORTEX", "CORTEX construct" );
+        Log.i( "BRAWL", "BRAWL construct" );
 
-        statictermite = this;
+        staticbrawl = this;
 
         itemIds = new String[3];
 
@@ -53,7 +53,7 @@ public class Cortex extends SDLActivity implements PurchasesUpdatedListener {
         mBillingClient.startConnection(new BillingClientStateListener() {
             @Override
             public void onBillingSetupFinished(@BillingResponse int billingResponseCode) {
-                Log.i( "CORTEX" ,  "billing setup finished " + billingResponseCode );
+                Log.i( "BRAWL" ,  "billing setup finished " + billingResponseCode );
 
                 if (billingResponseCode == BillingResponse.OK) {
                     // The billing client is ready. You can query purchases here.
@@ -62,7 +62,7 @@ public class Cortex extends SDLActivity implements PurchasesUpdatedListener {
             }
             @Override
             public void onBillingServiceDisconnected() {
-                Log.i( "CORTEX" ,  "billing client disconnected" );
+                Log.i( "BRAWL" ,  "billing client disconnected" );
                 // Try to restart the connection on the next request to
                 // Google Play by calling the startConnection() method.
             }
@@ -73,7 +73,7 @@ public class Cortex extends SDLActivity implements PurchasesUpdatedListener {
     public void getDetails( )
     {
 
-        Log.i( "CORTEX" , "getting product details" );
+        Log.i( "BRAWL" , "getting product details" );
 
 
         List skuList = new ArrayList<>( );
@@ -82,9 +82,9 @@ public class Cortex extends SDLActivity implements PurchasesUpdatedListener {
 //        skuList.add("android.test.purchased");
 //        skuList.add("android.test.purchased");
 
-        skuList.add("cortexdonationsmall");
-        skuList.add("cortexdonationmedium");
-        skuList.add("cortexdonationnormal");
+        skuList.add("brawldonationsmall");
+        skuList.add("brawldonationmedium");
+        skuList.add("brawldonationnormal");
 
         SkuDetailsParams.Builder params = SkuDetailsParams.newBuilder( );
         params.setSkusList( skuList ).setType( BillingClient.SkuType.INAPP );
@@ -95,7 +95,7 @@ public class Cortex extends SDLActivity implements PurchasesUpdatedListener {
                     @Override
                     public void onSkuDetailsResponse(int responseCode, List<SkuDetails> skuDetailsList) {
 
-                        Log.i( "CORTEX" , "SKUDETAULS responsecode " + responseCode );
+                        Log.i( "BRAWL" , "SKUDETAULS responsecode " + responseCode );
 
                         if (responseCode == BillingResponse.OK && skuDetailsList != null)
                         {
@@ -105,15 +105,15 @@ public class Cortex extends SDLActivity implements PurchasesUpdatedListener {
                                 String curr = skuDetails.getPriceCurrencyCode();
                                 String title = skuDetails.getTitle();
 
-                                Log.i( "CORTEX" , "sku : " + sku + " price : " + price + " title : " + title );
+                                Log.i( "BRAWL" , "sku : " + sku + " price : " + price + " title : " + title );
 
-                                if ("cortexdonationsmall".equals(sku)) {
+                                if ("brawldonationsmall".equals(sku)) {
                                     storeitem( 0 , price + " " + curr );
                                     itemIds[0]=sku;
-                                } else if ("cortexdonationmedium".equals(sku)) {
+                                } else if ("brawldonationmedium".equals(sku)) {
                                     storeitem( 1 , price + " " + curr  );
                                     itemIds[1]=sku;
-                                } else if ("cortexdonationnormal".equals(sku)) {
+                                } else if ("brawldonationnormal".equals(sku)) {
                                     storeitem( 2 , price + " " + curr  );
                                     itemIds[2]=sku;
                                 }
@@ -123,7 +123,7 @@ public class Cortex extends SDLActivity implements PurchasesUpdatedListener {
                         }
                         else
                         {
-                            Log.i( "CORTEX" , "no response" );
+                            Log.i( "BRAWL" , "no response" );
 
                         }
                         // Process the result.
@@ -135,38 +135,38 @@ public class Cortex extends SDLActivity implements PurchasesUpdatedListener {
     @Override
     public void onPurchasesUpdated( int responseCode , @Nullable List < Purchase > purchases )
     {
-        Log.i( "CORTEX" , "Purchases updated" );
+        Log.i( "BRAWL" , "Purchases updated" );
 
         if (responseCode == BillingResponse.OK && purchases != null)
         {
             for (Purchase purchase : purchases)
             {
-                Log.i( "CORTEX" , "Purchases completed " + purchase );
+                Log.i( "BRAWL" , "Purchases completed " + purchase );
             }
         }
         else if (responseCode == BillingResponse.USER_CANCELED)
         {
             // Handle an error caused by a user cancelling the purchase flow.
-            Log.i( "CORTEX" , "Purchases cancelled" );
+            Log.i( "BRAWL" , "Purchases cancelled" );
         }
         else
             {
             // Handle any other error codes.
-                Log.i( "CORTEX" , "Purchases error " + responseCode );
+                Log.i( "BRAWL" , "Purchases error " + responseCode );
         }
     }
 
     public static void buyItem( int index )
     {
 
-        statictermite.buyItemInst( index );
+        staticbrawl.buyItemInst( index );
 
     }
 
     public void buyItemInst( int index )
     {
 
-        Log.i( "CORTEX" , "buyItem : "  + index );
+        Log.i( "BRAWL" , "buyItem : "  + index );
 
         String sku = itemIds[ index ];
 
@@ -177,12 +177,12 @@ public class Cortex extends SDLActivity implements PurchasesUpdatedListener {
 
         int responseCode = mBillingClient.launchBillingFlow( this, flowParams );
 
-        Log.i( "CORTEX" , "purchase repsonsecode : "  + responseCode );
+        Log.i( "BRAWL" , "purchase repsonsecode : "  + responseCode );
     }
 
     public static void openURL( String url )
     {
-        statictermite.openURLInst( url );
+        staticbrawl.openURLInst( url );
     }
 
 

@@ -11,12 +11,12 @@ android {
     compileSdkVersion 26
     defaultConfig {
         if (buildAsApplication) {
-            applicationId "com.milgra.flow"
+            applicationId "com.milgra.badboys"
         }
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 4
-        versionName "3.0"
+        versionCode 8
+        versionName "3.00"
         externalNativeBuild {
             ndkBuild {
                 arguments "APP_PLATFORM=android-14"

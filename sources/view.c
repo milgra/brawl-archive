@@ -1317,7 +1317,7 @@
 		
         /* add to renderer */
 		
-        char success = 0;
+        int success = 0;
         uirenderer_reset( view.uirenderer );
 		
         for ( int index = 1 ;

@@ -15,6 +15,9 @@ LOCAL_C_INCLUDES := \
     $(LOCAL_PATH)/$(SDL_PATH)/include \
 	$(LOCAL_PATH)/framework/core \
 	$(LOCAL_PATH)/framework/tools \
+	$(LOCAL_PATH)/framework/ext \
+	$(LOCAL_PATH)/sources/actor \
+	$(LOCAL_PATH)/sources/ui \
 	$(LOCAL_PATH)/sources
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_C_INCLUDES)
@@ -23,12 +26,14 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_C_INCLUDES)
 #LOCAL_SRC_FILES := $(LOCAL_PATH)/sources/main.cpp
 
 LOCAL_SRC_FILES := \
-    $(subst $(LOCAL_PATH)/,, \
 	$(wildcard $(LOCAL_PATH)/framework/core/*.c) \
 	$(wildcard $(LOCAL_PATH)/framework/tools/*.c) \
-	$(wildcard $(LOCAL_PATH)/sources/*.c \
-    $(LOCAL_PATH)/bridge.c \
-    $(LOCAL_PATH)/sources/main.cpp ))
+	$(wildcard $(LOCAL_PATH)/framework/ext/*.c) \
+	$(wildcard $(LOCAL_PATH)/sources/actor/*.c) \
+	$(wildcard $(LOCAL_PATH)/sources/ui/*.c) \
+	$(wildcard $(LOCAL_PATH)/sources/*.c) \
+	$(wildcard $(LOCAL_PATH)/*.c) \
+    $(LOCAL_PATH)/sources/main.cpp
 
 LOCAL_SHARED_LIBRARIES := SDL2 SDL2_mixer
 
