@@ -95,7 +95,7 @@
         else if ( strcmp( name , "FEEDBACK") == 0 )
         {
 
-            bridge_open( ( char* ) "http://www.milgra.com/cortex.html" );
+            bridge_open( ( char* ) "http://www.milgra.com/brawl.html" );
 
         }
         else if ( strcmp( name , "HOMEPAGE") == 0 )
@@ -221,7 +221,7 @@
 
         /* paths first */
 
-        char* basepath = SDL_GetPrefPath( "milgra" , "cortex" );
+        char* basepath = SDL_GetPrefPath( "milgra" , "brawl" );
         char* respath = SDL_GetBasePath( );
 
         #ifdef ANDROID
@@ -326,16 +326,59 @@
             while( SDL_PollEvent( &event ) != 0 )
             {
 
+				#if defined(IOS) || defined(ANDROID)
+				if( event.type == SDL_FINGERDOWN )
+				{
+				
+					printf( "FINGERDOWN %lld\n" , event.tfinger.fingerId );
+					
+					char strid[10];
+					
+					snprintf( strid , 10 , "%lld" , event.tfinger.fingerId );
+					
+					touch_t touch =
+					{
+						.id = strid ,
+						.x = event.tfinger.x * width * scale ,
+						.y = event.tfinger.y * height * scale
+					};
+					
+					mtbus_notify( "VIEW" , "TOUCHDOWN" , &touch );
+
+				}
+				else if( event.type == SDL_FINGERUP )
+				{
+
+					printf( "FINGERUP %lld\n", event.tfinger.fingerId );
+
+					char strid[10];
+					
+					snprintf( strid , 10 , "%lld" , event.tfinger.fingerId );
+					
+					touch_t touch =
+					{
+						.id = strid ,
+						.x = event.tfinger.x * width * scale ,
+						.y = event.tfinger.y * height * scale
+					};
+
+					mtbus_notify( "VIEW" , "TOUCHUP" , &touch );
+
+				}
+				#else
                 if( event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP || event.type == SDL_MOUSEMOTION  )
                 {
+
+					printf( "MOUSEDOWN\n" );
 
                     int x = 0;
                     int y = 0;
 
                     SDL_GetMouseState( &x , &y );
 
-                    v2_t dimensions =
+                    touch_t touch =
 					{
+						.id = "mouse" ,
 						.x = x * scale ,
 						.y = y * scale
 					};
@@ -344,24 +387,25 @@
                     {
 
                     	drag = 1;
-                        mtbus_notify( "VIEW" , "TOUCHDOWN" , &dimensions );
+                        mtbus_notify( "VIEW" , "TOUCHDOWN" , &touch );
 
                     }
                     else if ( event.type == SDL_MOUSEBUTTONUP )
                     {
 
                     	drag = 0;
-                        mtbus_notify( "VIEW" , "TOUCHUP" , &dimensions );
+                        mtbus_notify( "VIEW" , "TOUCHUP" , &touch );
 
                     }
                     else if ( event.type == SDL_MOUSEMOTION && drag == 1 )
                     {
 
-                        mtbus_notify( "VIEW" , "TOUCHMOVE" , &dimensions );
+                        mtbus_notify( "VIEW" , "TOUCHMOVE" , &touch );
 
                     }
 
                 }
+                #endif
                 else if ( event.type == SDL_WINDOWEVENT )
                 {
 
@@ -541,7 +585,7 @@
 
             // create window
 
-            window = SDL_CreateWindow( "Cortex" , SDL_WINDOWPOS_UNDEFINED ,	SDL_WINDOWPOS_UNDEFINED , width , height , SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN
+            window = SDL_CreateWindow( "Brawl" , SDL_WINDOWPOS_UNDEFINED ,	SDL_WINDOWPOS_UNDEFINED , width , height , SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN
 										#if defined(IOS) || defined(ANDROID)
 										| SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_FULLSCREEN_DESKTOP
 										#endif
@@ -564,7 +608,7 @@
                     SDL_GL_GetDrawableSize(	window , &nw , &nh );
 
                     scale = nw / width;
-
+					
                     // try to set up vsync
 
                     if ( SDL_GL_SetSwapInterval( 1 ) < 0 )

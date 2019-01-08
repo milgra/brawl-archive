@@ -72,7 +72,9 @@
         if ( inited == 0 )
         {
             settings_setint( "initialized" , 1 );
-			
+
+            settings_setint( "donation_arrived" , 0 );
+
             settings_setint( "sceneindex" , 0 );
             settings_setint( "hudvisible" , 1 );
 			
@@ -88,6 +90,7 @@
             #endif
         }
 
+		defaults.donation_arrived = settings_getint( "donation_arrived" );
 		defaults.effects_level = settings_getint( "effects_level" );
 		defaults.sceneindex = settings_getint( "sceneindex" );
 		defaults.hudvisible = settings_getint( "hudvisible" );
@@ -145,7 +148,8 @@
 		settings_setfloat( "zoomratio" , defaults.zoomratio );
 		settings_setfloat( "alpharatio" , defaults.alpharatio );
 
-		settings_setint( "effects_level" ,defaults.effects_level );
+		settings_setint( "effects_level" , defaults.effects_level );
+		settings_setint( "donation_arrived" , defaults.donation_arrived );
 
     }
 

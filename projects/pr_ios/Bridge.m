@@ -100,7 +100,7 @@
 - ( void ) validateProductIdentifiers
 {
 
-    NSArray* productIds = @[ @"cortexdonationsmall" , @"cortexdonationmedium" , @"cortexdonationnormal" ];
+    NSArray* productIds = @[ @"brawldonationsmall" , @"brawldonationmedium" , @"brawldonationnormal" ];
 
     request = [ [ SKProductsRequest alloc ] initWithProductIdentifiers : [ NSSet setWithArray : productIds ] ];
     request.delegate = self;
@@ -124,19 +124,19 @@
         [ numberFormatter setLocale : product.priceLocale ];
         NSString *formattedPrice = [ numberFormatter stringFromNumber : product.price ];
 
-        if ( [ product.productIdentifier isEqualToString : @"cortexdonationsmall" ] )
+        if ( [ product.productIdentifier isEqualToString : @"brawldonationsmall" ] )
         {
             productA = product;
             const char* bytes = [ formattedPrice UTF8String ];
             strcpy( defaults.prices[ 0 ], bytes );
         }
-        if ( [ product.productIdentifier isEqualToString : @"cortexdonationmedium" ] )
+        if ( [ product.productIdentifier isEqualToString : @"brawldonationmedium" ] )
         {
             productB = product;
             const char* bytes = [ formattedPrice UTF8String ];
             strcpy( defaults.prices[ 1 ], bytes );
         }
-        if ( [ product.productIdentifier isEqualToString : @"cortexdonationnormal" ] )
+        if ( [ product.productIdentifier isEqualToString : @"brawldonationnormal" ] )
         {
             productC = product;
             const char* bytes = [ formattedPrice UTF8String ];
@@ -185,6 +185,10 @@
                 
             case SKPaymentTransactionStatePurchased :
             {
+			
+				defaults.donation_arrived = 1;
+				defaults_save( );
+				
                 result = @"Thank you for your donation!";
                 UIAlertController* alert =
                     [ UIAlertController
@@ -232,7 +236,7 @@ void bridge_init( void )
     
     if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone )
     {
-        //defaults.text_scale = 1.2;
+        defaults.scale *= 0.75;
     }
 }
 

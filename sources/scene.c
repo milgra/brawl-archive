@@ -1476,7 +1476,7 @@
         else if ( code == SDLK_UP	 ) scene.control_state.jump_pressed = state;
         else if ( code == SDLK_DOWN  ) scene.control_state.squat_pressed = state;
         else if ( code == SDLK_SPACE ) scene.control_state.run_pressed = state;
-		if 		( code == SDLK_d 	 ) scene.control_state.kick_pressed = state;
+		else if ( code == SDLK_d 	 ) scene.control_state.kick_pressed = state;
 		else if ( code == SDLK_s 	 ) scene.control_state.block_pressed = state;
 		else if ( code == SDLK_f	 ) scene.control_state.punch_pressed = state;
 		else if ( code == SDLK_c	 ) scene.control_state.shoot_pressed = state;

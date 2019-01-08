@@ -9,6 +9,15 @@
     #include "actor/base_metrics.c"
     #include "framework/core/mtmap.c"
 
+    typedef struct _touch_t touch_t;
+    struct _touch_t
+    {
+
+		char* id;
+		float x;
+		float y;
+
+    };
 
     typedef struct _view_t view_t;
     struct _view_t
@@ -1378,7 +1387,10 @@
         	scene.control_state.right_pressed = 1;
         	scene.control_state.run_pressed = 1;
 		}
-        else if ( strcmp( element->name , "uplabel"     ) == 0 ) scene.control_state.jump_pressed = 1;
+        else if ( strcmp( element->name , "uplabel"     ) == 0 )
+        {
+        	scene.control_state.jump_pressed = 1;
+		}
         else if ( strcmp( element->name , "downlabel"   ) == 0 ) scene.control_state.squat_pressed = 1;
         else if ( strcmp( element->name , "kicklabel"   ) == 0 ) scene.control_state.kick_pressed = 1;
         else if ( strcmp( element->name , "blocklabel"  ) == 0 ) scene.control_state.block_pressed = 1;
@@ -1507,7 +1519,6 @@
 				}
                 else if ( strcmp( command->name , "donate" ) == 0 )
                 {
-                	#ifdef STEAM
                 	if ( defaults.prices_arrived == 1 )
                 	{
 						element_t* dntselement = mtmap_get( view.uielements , "donselement" );
@@ -1515,9 +1526,6 @@
 						view_hideelement( (char*) "menuelement" );
 						view_showelement( (char*) "dntselement" );
                 	}
-                	#else
-                	mtbus_notify( "CTL" , "DONATE" , NULL );
-                	#endif
 				}
                 else if ( strcmp( command->name , "donate_a" ) == 0 )
                 {
@@ -1655,27 +1663,27 @@
 		else if ( strcmp( name , "TOUCHDOWN" ) == 0 )
 		{
 		
-			v2_t dimensions = * ( v2_t* ) data;
+			touch_t touch = * ( touch_t* ) data;
 		
 			input_t input = { 0 };
 			input.type = kInputTypeTouchDown;
-			input.stringa = "mouse";
-			input.floata = dimensions.x;
-			input.floatb = dimensions.y;
+			input.stringa = touch.id;
+			input.floata = touch.x;
+			input.floatb = touch.y;
 
 			view_input( &input );
 
 		}
 		else if ( strcmp( name , "TOUCHUP" ) == 0 )
 		{
-		
-			v2_t dimensions = * ( v2_t* ) data;
+			
+			touch_t touch = * ( touch_t* ) data;
 		
 			input_t input = { 0 };
 			input.type = kInputTypeTouchUp;
-			input.stringa = "mouse";
-			input.floata = dimensions.x;
-			input.floatb = dimensions.y;
+			input.stringa = touch.id;
+			input.floata = touch.x;
+			input.floatb = touch.y;
 
 			view_input( &input );
 
@@ -1683,13 +1691,13 @@
 		else if ( strcmp( name , "TOUCHMOVE" ) == 0 )
 		{
 		
-			v2_t dimensions = * ( v2_t* ) data;
+			touch_t touch = * ( touch_t* ) data;
 		
 			input_t input = { 0 };
 			input.type = kInputTypeTouchDrag;
-			input.stringa = "mouse";
-			input.floata = dimensions.x;
-			input.floatb = dimensions.y;
+			input.stringa = touch.id;
+			input.floata = touch.x;
+			input.floatb = touch.y;
 
 			view_input( &input );
 
