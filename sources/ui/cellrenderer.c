@@ -10,17 +10,17 @@
 
 
     /* alloc cellrenderer */
-    
+
     cellrenderer_t* cellrenderer_alloc( font_t* font , char* respath )
     {
         cellrenderer_t* result = mtmem_calloc( sizeof( cellrenderer_t ), cellrenderer_dealloc );
         result->alive = 1;
         result->elements_to_render = mtpipe_alloc( 100 );
-        
+
         result->input.font = mtmem_retain( font );;
         result->input.type = kInputTypeRender;
         result->input.respath = respath;
-        
+
         #ifndef ASMJS
         pthread_create(&result->thread, NULL, (void*)cellrenderer_timerloop , result );
         mtmem_retain( result );
@@ -45,7 +45,7 @@
         while ( renderer->alive )
         {
             element_t* element = mtpipe_recv( renderer->elements_to_render );
-            
+
             if ( element != NULL )
             {
                 element->input( element , &renderer->input );
@@ -53,10 +53,14 @@
             }
             else
             {
+                #ifdef RASPBERRY
+                usleep( 100 );
+                #else
                 struct timespec time;
                 time.tv_sec = 0;
                 time.tv_nsec = 100000000L;
                 nanosleep(&time , (struct timespec *)NULL);
+                #endif
             }
         }
 

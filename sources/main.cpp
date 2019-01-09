@@ -329,20 +329,20 @@
 				#if defined(IOS) || defined(ANDROID)
 				if( event.type == SDL_FINGERDOWN )
 				{
-				
+
 					printf( "FINGERDOWN %lld\n" , event.tfinger.fingerId );
-					
+
 					char strid[10];
-					
+
 					snprintf( strid , 10 , "%lld" , event.tfinger.fingerId );
-					
+
 					touch_t touch =
 					{
 						.id = strid ,
 						.x = event.tfinger.x * width * scale ,
 						.y = event.tfinger.y * height * scale
 					};
-					
+
 					mtbus_notify( "VIEW" , "TOUCHDOWN" , &touch );
 
 				}
@@ -352,9 +352,9 @@
 					printf( "FINGERUP %lld\n", event.tfinger.fingerId );
 
 					char strid[10];
-					
+
 					snprintf( strid , 10 , "%lld" , event.tfinger.fingerId );
-					
+
 					touch_t touch =
 					{
 						.id = strid ,
@@ -368,8 +368,6 @@
 				#else
                 if( event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP || event.type == SDL_MOUSEMOTION  )
                 {
-
-					printf( "MOUSEDOWN\n" );
 
                     int x = 0;
                     int y = 0;
@@ -589,6 +587,9 @@
 										#if defined(IOS) || defined(ANDROID)
 										| SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_FULLSCREEN_DESKTOP
 										#endif
+										#ifdef RASPBERRY
+										| SDL_WINDOW_RESIZABLE
+										#endif
 										);
 
             if ( window != NULL )
@@ -608,7 +609,7 @@
                     SDL_GL_GetDrawableSize(	window , &nw , &nh );
 
                     scale = nw / width;
-					
+
                     // try to set up vsync
 
                     if ( SDL_GL_SetSwapInterval( 1 ) < 0 )

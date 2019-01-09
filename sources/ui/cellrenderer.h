@@ -5,6 +5,7 @@
 
 
 	#include <pthread.h>
+	#include <sys/time.h>
     #include "element.h"
     #include "framework/core/mtpipe.c"
 
