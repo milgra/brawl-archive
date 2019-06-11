@@ -1,4 +1,14 @@
 
+	/*
+	
+		2.5 brawl, first person nezet verekedes kozben lent jobbra
+		labfej tapadjon foldre
+		ne sebezzen a hulla amig viszed
+		rombolhato tereptargyak
+		intersection detection egyszerusitese
+
+	*/
+
     #ifdef __cplusplus
 
     // Steam
